@@ -10,7 +10,7 @@ public class Boundary
 public class PlayerController : MonoBehaviour 
 {
 	public float speed;
-	public float tilt;
+	//public float tilt;
 	public Boundary boundary;
 
 	void FixedUpdate() {
@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
 		var movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
 
 		var rigidbody = GetComponent<Rigidbody>();
-		rigidbody.velocity = movement * speed;
+		rigidbody.velocity = movement * (speed + Mathf.Abs(rigidbody.velocity.x) * 0.5f);
 
 		// prevent ship from leaving area of game
 		rigidbody.position = new Vector3 (
@@ -30,10 +30,10 @@ public class PlayerController : MonoBehaviour
 		);
 
 		// rotate the ship
-		rigidbody.rotation = Quaternion.Euler(0.0f,0.0f,rigidbody.velocity.x * -tilt);
+		//rigidbody.rotation = Quaternion.Euler(0.0f,0.0f,rigidbody.velocity.x * -tilt);
 
 		// rotate ship based on position
-		//var transform = GetComponent<Transform> ();
-		//transform.rotation = new Quaternion(0.0f,0.0f,rigidbody.position.x * .15f,1f);
+		var transform = GetComponent<Transform> ();
+		transform.rotation = new Quaternion(0.0f,0.0f,rigidbody.position.x * .15f,1f);
 	}
 }
